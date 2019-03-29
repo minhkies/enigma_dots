@@ -87,16 +87,17 @@ main {
 .guess_0 {
     opacity: 1;
 }
+
 .hint_box {
     height: 100%;
     flex: 1;
-    border-radius: 5px;
-    background-color: #FB8544;
+    border-radius: 5px 0px 0px 5px;
     display: none;
     justify-content: flex-start;
     align-items: center;
-    
+
 }
+
 .hint_box_0 {
     opacity: 1;
 }
@@ -116,7 +117,7 @@ main {
     flex: 4;
 }
 
-.guess_box > div {
+.guess_box>div {
     height: 35px;
     width: 35px;
     background-color: #e6e6e6;
