@@ -1,14 +1,15 @@
 var id = "",
     guessCount = 0,
-    correctNumber = 0,
+    correctNumber =0,
     correctPosition = 0,
     answer = [],
     emptyColor = "rgb(230, 230, 230)",
     emptyColorChoice = "rgb(190, 190, 190)",
-    colorChoices = ["rgb(239, 68, 56)", "rgb(248, 152, 29)", "rgb(254, 234, 58)", "rgb(77, 175, 78)", "rgb(71, 143, 204)", "rgb(144, 62, 151)"],
-    colorLineClass = ["color_0", "color_1", "color_2", "color_3", "color_4", "color_5", "color_6"];
+    colorLineClass = ["color_0", "color_1", "color_2", "color_3", "color_4", "color_5", "color_6"],
+    colorArray = [];
 
-var colorChoicesTarget = [document.querySelector(".red_color"), document.querySelector(".orange_color"), document.querySelector(".yellow_color"), document.querySelector(".green_color"), document.querySelector(".blue_color"), document.querySelector(".violet_color")],
+var colorChoices = [],
+    colorChoicesTarget = [document.querySelector(".red_color"), document.querySelector(".orange_color"), document.querySelector(".yellow_color"), document.querySelector(".green_color"), document.querySelector(".blue_color"), document.querySelector(".violet_color")],
     guessLine = [document.querySelector(".guess_0"), document.querySelector(".guess_1"), document.querySelector(".guess_2"), document.querySelector(".guess_3"), document.querySelector(".guess_4"), document.querySelector(".guess_5"), document.querySelector(".guess_6")],
     hintBox = [document.querySelector(".hint_box_0"), document.querySelector(".hint_box_1"), document.querySelector(".hint_box_2"), document.querySelector(".hint_box_3"), document.querySelector(".hint_box_4"), document.querySelector(".hint_box_5"), document.querySelector(".hint_box_6")],
     txtHint = [document.querySelector(".txt_hint_0"), document.querySelector(".txt_hint_1"), document.querySelector(".txt_hint_2"), document.querySelector(".txt_hint_3"), document.querySelector(".txt_hint_4"), document.querySelector(".txt_hint_5"), document.querySelector(".txt_hint_6")],
@@ -22,8 +23,13 @@ var colorChoicesTarget = [document.querySelector(".red_color"), document.querySe
         [document.querySelector(".color_6_0"), document.querySelector(".color_6_1"), document.querySelector(".color_6_2"), document.querySelector(".color_6_3")]
     ];
 
+for (i = 0; i <= 5; i++) {
+    colorChoices.push(window.getComputedStyle(colorChoicesTarget[i], null).backgroundColor);
+    colorArray.push(window.getComputedStyle(colorChoicesTarget[i], null).backgroundColor);
+    console.log(colorChoices[i]);
+}
+
 function createAnswer() {
-    var colorArray = ["rgb(239, 68, 56)", "rgb(248, 152, 29)", "rgb(254, 234, 58)", "rgb(77, 175, 78)", "rgb(71, 143, 204)", "rgb(144, 62, 151)"];
     randomNumber = 0;
     for (i = 0; i <= 3; i++) {
         randomNumber = Math.floor(Math.random() * colorArray.length);
@@ -31,6 +37,8 @@ function createAnswer() {
         colorArray.splice(randomNumber, 1);
     }
 }
+
+
 
 function setHeight() {
     for (var i = 0; i <= 5; i++) {
