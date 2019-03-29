@@ -1,6 +1,6 @@
 var id = "",
     guessCount = 0,
-    correctNumber =0,
+    correctNumber = 0,
     correctPosition = 0,
     answer = [],
     emptyColor = "rgb(230, 230, 230)",
