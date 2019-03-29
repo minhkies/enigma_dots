@@ -5,7 +5,7 @@ var id = "",
     answer = [],
     emptyColor = "rgb(230, 230, 230)",
     emptyColorChoice = "rgb(190, 190, 190)",
-    colorChoices = ["rgb(250, 80, 74)", "rgb(255, 190, 81)", "rgb(253, 255, 76)", "rgb(74, 255, 70)", "rgb(77, 76, 255)", "rgb(200, 3, 209)"],
+    colorChoices = ["rgb(239, 68, 56)", "rgb(248, 152, 29)", "rgb(254, 234, 58)", "rgb(77, 175, 78)", "rgb(71, 143, 204)", "rgb(144, 62, 151)"],
     colorLineClass = ["color_0", "color_1", "color_2", "color_3", "color_4", "color_5", "color_6"];
 
 var colorChoicesTarget = [document.querySelector(".red_color"), document.querySelector(".orange_color"), document.querySelector(".yellow_color"), document.querySelector(".green_color"), document.querySelector(".blue_color"), document.querySelector(".violet_color")],
@@ -23,13 +23,20 @@ var colorChoicesTarget = [document.querySelector(".red_color"), document.querySe
     ];
 
 function createAnswer() {
-    var colorArray = ["rgb(250, 80, 74)", "rgb(255, 190, 81)", "rgb(253, 255, 76)", "rgb(74, 255, 70)", "rgb(77, 76, 255)", "rgb(200, 3, 209)"];
+    var colorArray = ["rgb(239, 68, 56)", "rgb(248, 152, 29)", "rgb(254, 234, 58)", "rgb(77, 175, 78)", "rgb(71, 143, 204)", "rgb(144, 62, 151)"];
     randomNumber = 0;
     for (i = 0; i <= 3; i++) {
         randomNumber = Math.floor(Math.random() * colorArray.length);
         answer.push(colorArray[randomNumber]);
         colorArray.splice(randomNumber, 1);
     }
+}
+
+function setHeight() {
+    for (var i = 0; i <= 5; i++) {
+        var colorWidth = parseFloat(window.getComputedStyle(colorChoicesTarget[i], null).getPropertyValue("width"));
+        colorChoicesTarget[i].style.height = colorWidth + "px";
+    };
 }
 
 function allowDrop(ev) {
@@ -94,7 +101,7 @@ function quantityCheck() {
     if (count == 0) {
         hintBox[guessCount].style.display = "flex";
         hintBox[guessCount].style.backgroundColor = "rgb(251, 133, 68)";
-        txtHint[guessCount].innerHTML = "SWIPE >";
+        txtHint[guessCount].innerHTML = "NEXT";
     }
 }
 
@@ -116,7 +123,7 @@ function qualityCheck(ev) {
         hintBox[guessCount].style.backgroundColor = "rgb(255, 255, 255)";
         txtHint[guessCount].style.color = "black";
         txtHint[guessCount].style.fontSize = "20pt";
-        txtHint[guessCount].innerHTML = correctPosition + " . " + correctNumber;
+        txtHint[guessCount].innerHTML = correctPosition + " - " + correctNumber;
         guessCount += 1;
         if (guessCount <= 6) {
             guessLine[guessCount].style.opacity = "1";

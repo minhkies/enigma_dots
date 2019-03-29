@@ -7,9 +7,12 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
 </head>
 
-<body onload="createAnswer()">
+<body onload="createAnswer(); setHeight();">
     <main>
         <div class="play_screen">
+            <div class="message_area">
+                <p class="txtMessage">Motivative Messages</p>
+            </div>
             <div class="color_choice_area">
                 <div class="color_choice red_color" id="0" draggable="true" ondragstart="dragStart(event)"></div>
                 <div class="color_choice orange_color" id="1" draggable="true" ondragstart="dragStart(event)"></div>
@@ -17,9 +20,6 @@
                 <div class="color_choice green_color" id="3" draggable="true" ondragstart="dragStart(event)"></div>
                 <div class="color_choice blue_color" id="4" draggable="true" ondragstart="dragStart(event)"></div>
                 <div class="color_choice violet_color" id="5" draggable="true" ondragstart="dragStart(event)"></div>
-            </div>
-            <div class="message_area">
-                <p class="txtMessage"></p>
             </div>
             <div class="guess_area">
                 <div class="guess guess_0">
