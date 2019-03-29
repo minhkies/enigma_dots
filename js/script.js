@@ -21,8 +21,10 @@ var colorChoices = [],
         [document.querySelector(".color_4_0"), document.querySelector(".color_4_1"), document.querySelector(".color_4_2"), document.querySelector(".color_4_3")],
         [document.querySelector(".color_5_0"), document.querySelector(".color_5_1"), document.querySelector(".color_5_2"), document.querySelector(".color_5_3")],
         [document.querySelector(".color_6_0"), document.querySelector(".color_6_1"), document.querySelector(".color_6_2"), document.querySelector(".color_6_3")]
-    ];
+    ],
+    txtMessage = document.querySelector(".txt_message");
 
+var colorWidth = parseFloat(window.getComputedStyle(colorChoicesTarget[0], null).getPropertyValue("width"));
 for (i = 0; i <= 5; i++) {
     colorChoices.push(window.getComputedStyle(colorChoicesTarget[i], null).backgroundColor);
     colorArray.push(window.getComputedStyle(colorChoicesTarget[i], null).backgroundColor);
@@ -40,11 +42,23 @@ function createAnswer() {
 
 
 
-function setHeight() {
+function setUp() {
     for (var i = 0; i <= 5; i++) {
-        var colorWidth = parseFloat(window.getComputedStyle(colorChoicesTarget[i], null).getPropertyValue("width"));
-        colorChoicesTarget[i].style.height = colorWidth + "px";
+        colorChoicesTarget[i].style.margin = colorWidth / 10 + "px";
+        colorChoicesTarget[i].style.height = colorWidth - (colorWidth / 10 * 2) + "px";
+        colorChoicesTarget[i].style.borderRadius = colorWidth / 2 + "px";
     };
+
+    for (i = 0; i <= 6; i++) {
+        for (a = 0; a <= 3; a++) {
+            guess[i][a].style.width = colorWidth / 3 * 2 + "px";
+            guess[i][a].style.height = colorWidth / 3 * 2 + "px";
+            guess[i][a].style.borderRadius = colorWidth / 3 * 2 / 2 + "px";
+        }
+        guessLine[i].style.margin = colorWidth / 20 + "px " + colorWidth / 10 + "px";
+        txtHint[i].style.fontSize = colorWidth / 3 + "px";
+    }
+    txtMessage.style.fontSize = colorWidth / 2 + "px";
 }
 
 function allowDrop(ev) {
@@ -130,7 +144,7 @@ function qualityCheck(ev) {
         }
         hintBox[guessCount].style.backgroundColor = "rgb(255, 255, 255)";
         txtHint[guessCount].style.color = "black";
-        txtHint[guessCount].style.fontSize = "20pt";
+        txtHint[guessCount].style.fontSize = colorWidth / 2 + "px";
         txtHint[guessCount].innerHTML = correctPosition + " - " + correctNumber;
         guessCount += 1;
         if (guessCount <= 6) {
