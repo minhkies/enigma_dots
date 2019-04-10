@@ -60,6 +60,15 @@ function allowDrop(ev) {
     ev.preventDefault();
 }
 
+function checkDraggable() {
+    for (i = 0; i <= 5; i++) {
+        if (colorChoicesTarget[i].style.backgroundColor == "" || colorChoicesTarget[i].style.backgroundColor == emptyColorChoice) {
+            colorChoicesTarget[i].setAttribute('draggable', false);
+        } else {
+            colorChoicesTarget[i].setAttribute('draggable', true);
+        }
+    }
+}
 
 function dragStart(type, ev) {
     if (type == "new") {
@@ -88,11 +97,11 @@ function drop(ev) {
         for (a = 0; a <= 3; a++) {
             if (colorChoicesTarget[i].style.backgroundColor == guess[guessCount][a].style.backgroundColor) {
                 deleteColorChoices(colorChoicesTarget[i], emptyColorChoice);
-                colorChoicesTarget[i].setAttribute('draggable', false);
             }
         }
     }
     quantityCheck();
+    checkDraggable();
 };
 
 
@@ -128,17 +137,17 @@ function deleteColorChoices(targetClass, color) {
 function resetColorChoices() {
     for (var i = 0; i <= 5; i++) {
         colorChoicesTarget[i].style.backgroundColor = colorChoices[i];
-        colorChoicesTarget[i].setAttribute('draggable', true);
     }
+    checkDraggable();
 }
 
 function addColorChoices(background) {
     for (var i = 0; i <= 5; i++) {
         if (background == colorChoices[i]) {
             colorChoicesTarget[i].style.backgroundColor = background;
-            colorChoicesTarget[i].setAttribute('draggable', true);
         }
     }
+    checkDraggable();
 }
 
 function quantityCheck() {

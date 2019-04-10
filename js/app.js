@@ -23,6 +23,28 @@ var colorChoices = [],
         [document.querySelector(".color_5_0"), document.querySelector(".color_5_1"), document.querySelector(".color_5_2"), document.querySelector(".color_5_3")],
         [document.querySelector(".color_6_0"), document.querySelector(".color_6_1"), document.querySelector(".color_6_2"), document.querySelector(".color_6_3")]
     ];
+    message[1][0][2];
+var message = [
+    [
+        ["", "", "Not a bad try", "Good start", "Amazing start!"],
+        ["", "Good try", "One more color!", "Awesome start!", ""],
+        ["Two more colors to go", "Awesome first try!", "You found the perfect balance", "", ""],
+        ["What an impressed start!", "Almost there on the first try!", "", "", ""],
+        ["It's simply miraculous", "", "", "", ""]
+    ],
+    [
+        ["", "", "Don't give up", "It 's gettingbetter!", "you're on the right track"],
+        ["", "Good try", "One more color!", "Awesome start!", ""],
+        ["Two more colors to go", "Awesome first try!", "You found the perfect balance", "", ""],
+        ["What an impressed start!", "Almost there on the first try!", "", "", ""],
+        ["It's simply miraculous", "", "", "", ""]
+    ],
+    [],
+    [],
+    [],
+    [],
+    []
+]
 
 for (i = 0; i <= 5; i++) {
     colorChoices.push(window.getComputedStyle(colorChoicesTarget[i], null).backgroundColor);
@@ -68,11 +90,10 @@ function dragStart(type, ev) {
 
 function checkDraggable() {
     for (i = 0; i <= 5; i++) {
-        if (colorChoicesTarget[i].style.backgroundColor != "" || colorChoicesTarget[i].style.backgroundColor != emptyColorChoice) {
-            colorChoicesTarget[i].setAttribute('draggable', true);
-        }
-        if (colorChoicesTarget[i].style.backgroundColor == "" || colorChoicesTarget[i].style.backgroundColor == emptyColorChoice) {} {
+        if (colorChoicesTarget[i].style.backgroundColor == "" || colorChoicesTarget[i].style.backgroundColor == emptyColorChoice) {
             colorChoicesTarget[i].setAttribute('draggable', false);
+        } else {
+            colorChoicesTarget[i].setAttribute('draggable', true);
         }
     }
 }
