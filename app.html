@@ -9,7 +9,7 @@
     <meta charset="utf-8">
 </head>
 
-<body onload="createAnswer(); setHeight(); reapplyColorChoices()">
+<body onload="createAnswer(); setHeight(); reapplyColorChoices();">
     <div class="container">
         <main>
             <div class="message_area">
@@ -108,8 +108,18 @@
             </div>
         </main>
     </div>
-    <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/DragDropTouch.js"></script>
+    <script>
+    if (localStorage.mode == "hard") {
+        var scriptChild = document.createElement("script");
+        scriptChild.src = "./js/app_hard.js";
+        document.body.appendChild(scriptChild);
+    } else {
+        var scriptChild = document.createElement("script");
+        scriptChild.src = "./js/app.js";
+        document.body.appendChild(scriptChild);
+    }
+    </script>
 </body>
 
 </html>

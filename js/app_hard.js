@@ -31,10 +31,15 @@ for (i = 0; i <= 5; i++) {
 
 function createAnswer() {
     randomNumber = 0;
+    var randomEmpty = Math.floor(Math.random() * 4)
+    answer[randomEmpty] = emptyColor;
     for (i = 0; i <= 3; i++) {
-        randomNumber = Math.floor(Math.random() * colorArray.length);
-        answer.push(colorArray[randomNumber]);
-        colorArray.splice(randomNumber, 1);
+        if (answer[i] != emptyColor) {
+            randomNumber = Math.floor(Math.random() * colorArray.length);
+            answer[i] = colorArray[randomNumber];
+            colorArray.splice(randomNumber, 1);
+        }
+        console.log(answer[i]);
     }
 }
 
@@ -143,7 +148,7 @@ function quantityCheck() {
             count += 1;
         }
     }
-    if (count == 0) {
+    if (count == 1) {
         hintBox[guessCount].style.display = "flex";
         hintBox[guessCount].style.backgroundColor = "rgb(251, 133, 68)";
         txtHint[guessCount].innerHTML = "NEXT";
@@ -160,10 +165,12 @@ function qualityCheck(ev) {
         for (i = 0; i <= 3; i++) {
             for (a = 0; a <= 3; a++) {
                 if (guess[guessCount][a].style.backgroundColor == answer[i]) {
-                    if (a == i) {
-                        correctPosition += 1;
-                    } else {
-                        correctNumber += 1;
+                    if (answer[i] != emptyColor) {
+                        if (a == i) {
+                            correctPosition += 1;
+                        } else {
+                            correctNumber += 1;
+                        }
                     }
                 }
             }
@@ -182,7 +189,7 @@ function qualityCheck(ev) {
 }
 
 function resultCheck() {
-    if (correctPosition == 4) {
+    if (correctPosition == 3) {
         winCount++;
         localStorage.winCount = winCount;
         alert("Win");
