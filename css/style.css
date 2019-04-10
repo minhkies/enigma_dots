@@ -49,9 +49,10 @@ main {
 .hero_image {
     grid-row: 1/4;
     grid-column: 1/2;
-    display: flex;
-    align-items: stretch;
-    align-content: stretch;
+    background-image: url("../img/hero.svg");
+    background-size: cover;
+    background-position: bottom center;
+    background-repeat: no-repeat;
 }
 
 .hero_image svg {
@@ -108,23 +109,7 @@ main {
     max-height: 30px;
 }
 
-.large_tree {
-    animation: tree 10s linear alternate-reverse infinite;
-}
 
-.small_tree {
-    animation: tree 10s linear alternate infinite;
-}
-
-@keyframes tree {
-    100% {
-        transform: translate(-100px, -100px) scale(1.1, 1.1);
-    }
-
-    0% {
-        transform: translate(100px, 100px) scale(0.9, 0.9);
-    }
-}
 
 
 @media only screen and (min-width: 426px) {
