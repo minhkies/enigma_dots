@@ -6,7 +6,8 @@ var id = "",
     emptyColor = "rgb(230, 230, 230)",
     emptyColorChoice = "rgb(190, 190, 190)",
     colorLineClass = ["color_0", "color_1", "color_2", "color_3", "color_4", "color_5", "color_6"],
-    colorArray = [];
+    colorArray = [],
+    textMsg = document.querySelector(".txtMessage");
 
 var colorChoices = [],
     colorChoicesTarget = [document.querySelector(".red_color"), document.querySelector(".orange_color"), document.querySelector(".yellow_color"), document.querySelector(".green_color"), document.querySelector(".blue_color"), document.querySelector(".violet_color")],
@@ -142,12 +143,33 @@ function qualityCheck(ev) {
 }
 
 function resultCheck() {
+    
+    
     if (correctPosition == 4) {
         alert("Win");
-    } else {
-        if (guessCount == 7) {
+    }
+    
+    else if (guessCount == 7) {
             alert("Lose");
         }
-
-    }
+    
+     else if (correctPosition == 3){
+            textMsg.innerHTML = "Almost there!";
+        } else if (correctPosition == 2){
+            textMsg.innerHTML = "On a Streak!";
+        } else if (correctPosition == 1){
+            textMsg.innerHTML = "First Color Right!";
+            textMsg.style.textAlign = "Center";
+        } else if (correctNumber == 4 ) {
+            textMsg.innerHTML = "Right colours right way!!";
+        } else if (correctNumber == 3 ) {
+            textMsg.innerHTML = "One colour missing don't give up!!";
+            textMsg.style.textAlign = "Center";
+        } else if (correctNumber == 2 ) {
+            textMsg.innerHTML = "Time is running out";
+            textMsg.style.textAlign = "Center";
+        } else if (correctNumber == 1 ) {
+            textMsg.innerHTML = "One colour is better than none";
+            textMsg.style.textAlign = "Center";
+        }
 }
