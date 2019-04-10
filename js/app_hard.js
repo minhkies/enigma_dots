@@ -2,12 +2,12 @@ var id = "",
     guessCount = 0,
     correctNumber = 0,
     correctPosition = 0,
-    answer = [],
+    winCount = 0;
+answer = [],
     emptyColor = "rgb(230, 230, 230)",
     emptyColorChoice = "rgb(190, 190, 190)",
     colorLineClass = ["color_0", "color_1", "color_2", "color_3", "color_4", "color_5", "color_6"],
-    colorArray = [],
-    textMsg = document.querySelector(".txtMessage");
+    colorArray = [];
 
 var colorChoices = [],
     colorChoicesTarget = [document.querySelector(".red_color"), document.querySelector(".orange_color"), document.querySelector(".yellow_color"), document.querySelector(".green_color"), document.querySelector(".blue_color"), document.querySelector(".violet_color")],
@@ -27,19 +27,27 @@ var colorChoices = [],
 for (i = 0; i <= 5; i++) {
     colorChoices.push(window.getComputedStyle(colorChoicesTarget[i], null).backgroundColor);
     colorArray.push(window.getComputedStyle(colorChoicesTarget[i], null).backgroundColor);
-    console.log(colorChoices[i]);
 }
 
 function createAnswer() {
     randomNumber = 0;
+    var randomEmpty = Math.floor(Math.random() * 4)
+    answer[randomEmpty] = emptyColor;
     for (i = 0; i <= 3; i++) {
-        randomNumber = Math.floor(Math.random() * colorArray.length);
-        answer.push(colorArray[randomNumber]);
-        colorArray.splice(randomNumber, 1);
+        if (answer[i] != emptyColor) {
+            randomNumber = Math.floor(Math.random() * colorArray.length);
+            answer[i] = colorArray[randomNumber];
+            colorArray.splice(randomNumber, 1);
+        }
+        console.log(answer[i]);
     }
 }
 
-
+function reapplyColorChoices() {
+    for (i = 0; i <= 5; i++) {
+        colorChoicesTarget[i].style.backgroundColor = colorChoices[i];
+    }
+}
 
 function setHeight() {
     for (var i = 0; i <= 5; i++) {
@@ -53,35 +61,68 @@ function allowDrop(ev) {
 }
 
 
-function dragStart(ev) {
-    id = ev.target.id;
+function dragStart(type, ev) {
+    if (type == "new") {
+        targetClass = ev.target.classList[1];
+        sourceType = "new";
+    } else if (type == "switch") {
+        targetClass = ev.target.classList[2];
+        sourceType = "switch";
+    }
 }
 
 function drop(ev) {
-    if (colorChoicesTarget[id].style.backgroundColor != emptyColorChoice) {
-        ev.target.style.backgroundColor = colorChoices[id];
-        deleteColorChoices(id);
-        quantityCheck();
+    var currentElement = document.querySelector("." + targetClass);
+    if (sourceType == "new") {
+        if (window.getComputedStyle(currentElement, null).backgroundColor != emptyColorChoice) {
+            ev.target.style.backgroundColor = currentElement.style.backgroundColor;
+        }
+    } else if (sourceType == "switch") {
+        if (window.getComputedStyle(currentElement, null).backgroundColor != emptyColor) {
+            ev.target.style.backgroundColor = currentElement.style.backgroundColor;
+            deleteDuplicate(ev.target);
+        }
     }
+    for (i = 0; i <= 5; i++) {
+        colorChoicesTarget[i].style.backgroundColor = colorChoices[i];
+        for (a = 0; a <= 3; a++) {
+            if (colorChoicesTarget[i].style.backgroundColor == guess[guessCount][a].style.backgroundColor) {
+                deleteColorChoices(colorChoicesTarget[i], emptyColorChoice);
+                colorChoicesTarget[i].setAttribute('draggable', false);
+            }
+        }
+    }
+    quantityCheck();
 };
 
 
-function removeColor(ev) {
-    if (ev.target.classList.item(0) == "color") {
-        if (ev.target.classList.item(1) == colorLineClass[guessCount]) {
-            addColorChoices(ev.target.style.backgroundColor);
-            ev.target.style.backgroundColor = emptyColor;
-            if (hintBox[guessCount].style.display == "flex") {
-                hintBox[guessCount].style.display = "none";
+function deleteDuplicate(current) {
+    for (i = 0; i <= 3; i++) {
+        if (guess[guessCount][i].style.backgroundColor == current.style.backgroundColor) {
+            if (guess[guessCount][i] != current) {
+                deleteColorChoices(guess[guessCount][i], emptyColor);
             }
-            quantityCheck();
         }
     }
 }
 
-function deleteColorChoices(id) {
-    colorChoicesTarget[id].style.backgroundColor = emptyColorChoice;
-    colorChoicesTarget[id].setAttribute('draggable', false);
+function removeColor(ev) {
+    for (i = 0; i <= 3; i++) {
+        if (ev.target == guess[guessCount][i]) {
+            if (ev.target.style.backgroundColor != null || ev.target.style.backgroundColor != emptyColor) {
+                addColorChoices(ev.target.style.backgroundColor);
+                ev.target.style.backgroundColor = emptyColor;
+            }
+        }
+    }
+    if (hintBox[guessCount].style.display == "flex") {
+        hintBox[guessCount].style.display = "none";
+    };
+    quantityCheck();
+}
+
+function deleteColorChoices(targetClass, color) {
+    targetClass.style.backgroundColor = color;
 }
 
 function resetColorChoices() {
@@ -107,7 +148,7 @@ function quantityCheck() {
             count += 1;
         }
     }
-    if (count == 0) {
+    if (count == 1) {
         hintBox[guessCount].style.display = "flex";
         hintBox[guessCount].style.backgroundColor = "rgb(251, 133, 68)";
         txtHint[guessCount].innerHTML = "NEXT";
@@ -115,16 +156,21 @@ function quantityCheck() {
 }
 
 function qualityCheck(ev) {
+    for (i = 0; i <= 3; i++) {
+        guess[guessCount][i].setAttribute('ondrop', false);
+    }
     if (hintBox[guessCount].style.backgroundColor == "rgb(251, 133, 68)") {
         correctNumber = 0;
         correctPosition = 0;
         for (i = 0; i <= 3; i++) {
             for (a = 0; a <= 3; a++) {
                 if (guess[guessCount][a].style.backgroundColor == answer[i]) {
-                    if (a == i) {
-                        correctPosition += 1;
-                    } else {
-                        correctNumber += 1;
+                    if (answer[i] != emptyColor) {
+                        if (a == i) {
+                            correctPosition += 1;
+                        } else {
+                            correctNumber += 1;
+                        }
                     }
                 }
             }
@@ -143,33 +189,14 @@ function qualityCheck(ev) {
 }
 
 function resultCheck() {
-    
-    
-    if (correctPosition == 4) {
+    if (correctPosition == 3) {
+        winCount++;
+        localStorage.winCount = winCount;
         alert("Win");
-    }
-    
-    else if (guessCount == 7) {
+    } else {
+        if (guessCount == 7) {
             alert("Lose");
         }
-    
-     else if (correctPosition == 3){
-            textMsg.innerHTML = "Almost there!";
-        } else if (correctPosition == 2){
-            textMsg.innerHTML = "On a Streak!";
-        } else if (correctPosition == 1){
-            textMsg.innerHTML = "First Color Right!";
-            textMsg.style.textAlign = "Center";
-        } else if (correctNumber == 4 ) {
-            textMsg.innerHTML = "Right colours right way!!";
-        } else if (correctNumber == 3 ) {
-            textMsg.innerHTML = "One colour missing don't give up!!";
-            textMsg.style.textAlign = "Center";
-        } else if (correctNumber == 2 ) {
-            textMsg.innerHTML = "Time is running out";
-            textMsg.style.textAlign = "Center";
-        } else if (correctNumber == 1 ) {
-            textMsg.innerHTML = "One colour is better than none";
-            textMsg.style.textAlign = "Center";
-        }
+
+    }
 }
