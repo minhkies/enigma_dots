@@ -1,9 +1,8 @@
 var id = "",
     guessCount = 0,
-    correctNumber = 0,
+    correctColor = 0,
     correctPosition = 0,
-    winCount = 0;
-answer = [],
+    answer = [],
     emptyColor = "rgb(230, 230, 230)",
     emptyColorChoice = "rgb(190, 190, 190)",
     colorLineClass = ["color_0", "color_1", "color_2", "color_3", "color_4", "color_5", "color_6"],
@@ -24,6 +23,59 @@ var colorChoices = [],
         [document.querySelector(".color_6_0"), document.querySelector(".color_6_1"), document.querySelector(".color_6_2"), document.querySelector(".color_6_3")]
     ];
 
+var txtMessage = document.querySelector(".txt_message"),
+    colorChoiceArea = document.querySelector(".color_choice_area");
+var message = [
+    [
+        ["", "", "Not a bad try", "Good start", "Amazing start!"],
+        ["", "Good try", "One more color!", "Awesome start!", ""],
+        ["Two more colors to go", "Awesome first try!", "You found the perfect balance", "", ""],
+        ["What an impressive start!", "Almost there on the first try!", "", "", ""],
+        ["It's simply miraculous", "", "", "", ""]
+    ],
+    [
+        ["", "", "Don't give up", "It 's getting better!", "You're on the right track"],
+        ["", "Good things take time", "Cheer yourself on!", "Show this game who's boss", ""],
+        ["You will rock this game", "You're smarter than you believe", "Trust your gut... It knows the answer", "", ""],
+        ["The answers are all inside you", "You'll be sucessful the moment you choose to be", "", "", ""],
+        ["It's simply miraculous", "", "", "", ""]
+    ],
+    [
+        ["", "", "Inhale confidence, exhale doubts", "Try harder!", "Dazzle this game with all your smartness"],
+        ["", "Without passion, you're already dead", "One more color!", "Amazing!", ""],
+        ["Keep your chin up, you've got this", "Show what you've known", "Your future is bright", "", ""],
+        ["You're in control of your success", "You were 'mint' to suceed!", "", "", ""],
+        ["It's simply miraculous", "", "", "", ""]
+    ],
+    [
+        ["", "", "Don't give up!", "You can and you will", "You've worked so hard!"],
+        ["", "I believe in you", "Your confidence will carry you through", "You can do hard things!", ""],
+        ["Incredible!", "Keep it up!", "This game has no power over you", "", ""],
+        ["Brilliant!", "Hurray!", "", "", ""],
+        ["It's simply miraculous", "", "", "", ""]
+    ],
+    [
+        ["", "", "Mind-blowing!", "Marvelous!", "Awesome!"],
+        ["", "Embrace challenges", "Magnificent!", "Beautiful!", ""],
+        ["You're on fire!", "Believing in yourself is the key to success", "You're preserved", "", ""],
+        ["You're the brightest star in the sky", "You're in control", "", "", ""],
+        ["It's simply miraculous", "", "", "", ""]
+    ],
+    [
+        ["", "", "Success is measured by your effort", "Keep dimbing", "You glow when you show you know!"],
+        ["", "It's time to shine", "You can do it", "You're on the way to success", ""],
+        ["Make things happen", "Stay determined", "Stupendous!", "", ""],
+        ["You're red hot", "It's crunch time", "", "", ""],
+        ["It's simply miraculous", "", "", "", ""]
+    ],
+    [
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""]
+    ]
+];
 for (i = 0; i <= 5; i++) {
     colorChoices.push(window.getComputedStyle(colorChoicesTarget[i], null).backgroundColor);
     colorArray.push(window.getComputedStyle(colorChoicesTarget[i], null).backgroundColor);
@@ -58,6 +110,24 @@ function setHeight() {
 
 function allowDrop(ev) {
     ev.preventDefault();
+    if (ev.target.classList.contains("color_" + guessCount)) {
+        ev.target.style.border = "solid 1px rgb(40, 173, 126)";
+        ev.target.addEventListener("dragleave", function() {
+            ev.target.style.border = "solid 1px " + window.getComputedStyle(ev.target).backgroundColor;
+        });
+    }
+}
+
+function allowDropColorChoice(ev) {
+    ev.preventDefault();
+    for (i = 0; i <= 5; i++) {
+        colorChoicesTarget[i].style.border = "solid 1px rgb(40, 173, 126)";
+    }
+    colorChoiceArea.addEventListener("dragleave", function() {
+        for (i = 0; i <= 5; i++) {
+            colorChoicesTarget[i].style.border = "solid 1px " + window.getComputedStyle(colorChoicesTarget[i]).backgroundColor;
+        }
+    });
 }
 
 function checkDraggable() {
@@ -100,10 +170,48 @@ function drop(ev) {
             }
         }
     }
+    matchBorder();
+    matchBorderColorChoices();
     quantityCheck();
     checkDraggable();
 };
 
+function dropColorChoice(ev) {
+    var currentElement = document.querySelector("." + targetClass);
+    var countCheck = 0;
+    for (i = 0; i <= 5; i++) {
+        if (currentElement.classList == colorChoicesTarget[i].classList) {
+            countCheck++;
+        }
+    }
+
+    if (countCheck == 0) {
+        if (window.getComputedStyle(currentElement, null).backgroundColor != emptyColor) {
+            for (i = 0; i <= 5; i++) {
+                if (colorChoices[i] == currentElement.style.backgroundColor) {
+                    colorChoicesTarget[i].style.background = colorChoices[i];
+                }
+            }
+            currentElement.style.backgroundColor = emptyColor;
+        }
+        checkDraggable();
+        quantityCheck();
+    }
+    matchBorder();
+    matchBorderColorChoices();
+}
+
+function matchBorder() {
+    for (i = 0; i <= 3; i++) {
+        guess[guessCount][i].style.border = "solid 1px " + window.getComputedStyle(guess[guessCount][i]).backgroundColor;
+    }
+}
+
+function matchBorderColorChoices() {
+    for (i = 0; i <= 5; i++) {
+        colorChoicesTarget[i].style.border = "solid 1px " + window.getComputedStyle(colorChoicesTarget[i]).backgroundColor;
+    }
+}
 
 function deleteDuplicate(current) {
     for (i = 0; i <= 3; i++) {
@@ -127,6 +235,8 @@ function removeColor(ev) {
     if (hintBox[guessCount].style.display == "flex") {
         hintBox[guessCount].style.display = "none";
     };
+    matchBorder();
+    matchBorderColorChoices();
     quantityCheck();
 }
 
@@ -138,6 +248,7 @@ function resetColorChoices() {
     for (var i = 0; i <= 5; i++) {
         colorChoicesTarget[i].style.backgroundColor = colorChoices[i];
     }
+    matchBorderColorChoices();
     checkDraggable();
 }
 
@@ -159,7 +270,7 @@ function quantityCheck() {
     }
     if (count == 1) {
         hintBox[guessCount].style.display = "flex";
-        hintBox[guessCount].style.backgroundColor = "rgb(251, 133, 68)";
+        hintBox[guessCount].style.backgroundColor = "rgb(40, 173, 126)";
         txtHint[guessCount].innerHTML = "NEXT";
     }
 }
@@ -168,8 +279,8 @@ function qualityCheck(ev) {
     for (i = 0; i <= 3; i++) {
         guess[guessCount][i].setAttribute('ondrop', false);
     }
-    if (hintBox[guessCount].style.backgroundColor == "rgb(251, 133, 68)") {
-        correctNumber = 0;
+    if (hintBox[guessCount].style.backgroundColor == "rgb(40, 173, 126)") {
+        correctColor = 0;
         correctPosition = 0;
         for (i = 0; i <= 3; i++) {
             for (a = 0; a <= 3; a++) {
@@ -178,7 +289,7 @@ function qualityCheck(ev) {
                         if (a == i) {
                             correctPosition += 1;
                         } else {
-                            correctNumber += 1;
+                            correctColor += 1;
                         }
                     }
                 }
@@ -187,7 +298,8 @@ function qualityCheck(ev) {
         hintBox[guessCount].style.backgroundColor = "rgb(255, 255, 255)";
         txtHint[guessCount].style.color = "black";
         txtHint[guessCount].style.fontSize = "20pt";
-        txtHint[guessCount].innerHTML = correctPosition + " - " + correctNumber;
+        txtHint[guessCount].innerHTML = "<b>" + correctPosition + " </b> - " + correctColor;
+        txtMessage.innerHTML = message[guessCount][correctPosition][correctColor];
         guessCount += 1;
         if (guessCount <= 6) {
             guessLine[guessCount].style.opacity = "1";
@@ -198,14 +310,33 @@ function qualityCheck(ev) {
 }
 
 function resultCheck() {
+    var pkg = JSON.parse(localStorage.pkg);
     if (correctPosition == 3) {
-        winCount++;
-        localStorage.winCount = winCount;
-        alert("Win");
+        pkg.winCount++
+        showResult("win");
     } else {
         if (guessCount == 7) {
-            alert("Lose");
+            showResult("lose");
         }
-
     }
+    localStorage.setItem("pkg", JSON.stringify(pkg));
+}
+
+function showResult(res) {
+    var page = document.querySelector(".result").style.display = "grid",
+        dimmer = document.querySelector(".dimmer").style.opacity = "1",
+        resultDisplay = document.querySelector(".result_display").style.transform = "scale(1)";
+    var rippon = document.querySelector(".rippon"),
+        txtResult = document.querySelector(".txt_result"),
+        btnExit = document.querySelector(".exit");
+    if (res == "win") {
+        rippon.src = "img/win.svg";
+        txtResult.innerHTML = "Congratulations!";
+    } else if (res == "lose") {
+        rippon.src = "img/lose.svg";
+        txtResult.innerHTML = "Failed!"
+    };
+    rippon.style.transform = "scale(1)";
+    txtResult.style.transform = "scale(1)";
+    btnExit.style.opacity = "1";
 }

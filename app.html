@@ -13,19 +13,19 @@
     <div class="container">
         <main>
             <div class="message_area">
-                <p class="txtMessage">Motivative Messages</p>
+                <p class="txt_message">Let's do this</p>
             </div>
-            <div class="btn_back" onclick="window.location.href = 'index.html'">
-                <img src=" img/arrow.svg">
-                <p>home</p>
+            <div class="btn_back">
+                <img src=" img/arrow.svg" onclick="window.location.href = 'index.html'">
+                <p onclick="window.location.href = 'index.html'">home</p>
             </div>
             <div class="color_choice_area">
-                <div class="color_choice red_color" draggable="true" ondragstart="dragStart('new', event)"></div>
-                <div class="color_choice orange_color" draggable="true" ondragstart="dragStart('new', event)"></div>
-                <div class="color_choice yellow_color" draggable="true" ondragstart="dragStart('new', event)"></div>
-                <div class="color_choice green_color" draggable="true" ondragstart="dragStart('new', event)"></div>
-                <div class="color_choice blue_color" draggable="true" ondragstart="dragStart('new', event)"></div>
-                <div class="color_choice violet_color" draggable="true" ondragstart="dragStart('new', event)"></div>
+                <div class="color_choice red_color" draggable="true" ondragstart="dragStart('new', event)" ondragover="allowDropColorChoice(event)" ondrop="dropColorChoice(event)"></div>
+                <div class="color_choice orange_color" draggable="true" ondragstart="dragStart('new', event)"" ondragover=" allowDropColorChoice(event)" ondrop="dropColorChoice(event)"></div>
+                <div class="color_choice yellow_color" draggable="true" ondragstart="dragStart('new', event)" ondragover="allowDropColorChoice(event)" ondrop="dropColorChoice(event)"></div>
+                <div class="color_choice green_color" draggable="true" ondragstart="dragStart('new', event)" ondragover="allowDropColorChoice(event)" ondrop="dropColorChoice(event)"></div>
+                <div class="color_choice blue_color" draggable="true" ondragstart="dragStart('new', event)" ondragover="allowDropColorChoice(event)" ondrop="dropColorChoice(event)"></div>
+                <div class="color_choice violet_color" draggable="true" ondragstart="dragStart('new', event)" ondragover="allowDropColorChoice(event)" ondrop="dropColorChoice(event)"></div>
             </div>
             <div class="guess_area">
                 <div class="guess guess_0">
@@ -107,10 +107,21 @@
                 </div>
             </div>
         </main>
+        <section class="result">
+            <div class="dimmer"></div>
+            <img class="rippon" src="img/win.svg">
+            <div class="result_display">
+                <p class="txt_result">
+                    }
+                    |/p>
+            </div>
+            <a href="index.html" class="exit">X</a>
+        </section>
     </div>
     <script type="text/javascript" src="js/DragDropTouch.js"></script>
     <script>
-    if (localStorage.mode == "hard") {
+    var pkg = JSON.parse(localStorage.pkg);
+    if (pkg.mode == "hard") {
         var scriptChild = document.createElement("script");
         scriptChild.src = "./js/app_hard.js";
         document.body.appendChild(scriptChild);

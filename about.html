@@ -1,182 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
+    <title>About</title>
+    <link rel="stylesheet" type="text/css" href="css/about.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+</head>
 
-    <title> About Us</title>
-    <style>
-
-body {
-    padding: 0;
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-}
-
-main{
-    width: 100vw;
-    height: 100vh;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-
-.play_screen {
-position: relative;
- width: 360px;
-height: 100vh;
-max-height: 780px;
-        background-color: #F5F5F5;
-    display: flex;
-    flex-direction: row-reverse;
-}
-        .app {
-        }
-        .im1{
-            display: flex;
-            width: 100%;
-            float: right;
-            justify-content: center;
-        }
-        
-        .im2 {
-            width: 220px;
-            height: 220px;
-            margin-left: 90px;
-            margin-top: -50px;
-        }
-        
-        .controls{
-            position: absolute;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            
-        }
-        
-        .inp1 {
-    background-color: #28AD7E;
-  border: none;
-  color: white;
-  padding: 15px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  font-family: 'Roboto', sans-serif;
-  cursor: pointer;
-border-radius: 8px;
-width: 340px;
-margin-right: 10px;
-margin-bottom: -6px;
-}
-        
-                
-        .inp2 {
-    background-color: #28AD7E;
-  border: none;
-  color: white;
-  padding: 15px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  font-family: 'Roboto', sans-serif;
-  cursor: pointer;
-border-radius: 8px;
-width: 340px;
-margin-right: 10px;
-margin-bottom: 11px;
-}
-        
-        .inp1:active {
-background-color: white;
-    color: #28AD7E;
-        border: 0.5px solid #28AD7E;
-        }
-        
-        .inp2:active {
-background-color: white;
-    color: #28AD7E;
-        border: 0.5px solid #28AD7E;
-        }
-        #vi {
-            position: absolute;
-            top: 65%;
-            left: 29.5%;
-            font-size: 15pt;
-            color: dimgray;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 250;
-            text-align: center;
-        }
-        .overlay{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  background-color: rgba(0,0,0,0.5);
-    visibility: hidden;
-}
-        
-        .modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 200px;
-    margin-left: -150px;
-    margin-top: -100px;
-    background-color: #28AD7E;
-    border-radius: 5px;
-    z-index: 10;
-}
-        #inf {
-            margin: 20px;
-            padding: 10px;
-        }
-        
-        #cls {
-            position: absolute;
-            top: 0;
-            margin:auto;
-            padding:10px;
-            cursor: pointer;
-        }
-    </style>
-    </head>
 <body>
-<main>
-    <div class ="play_screen">
-        <div class = "app">
-        <img class = "im1" src = "about.svg" alt="About">
-        <img class = "im2" src = "logo.svg" alt="Logo">
-            <p id ="vi"> Version 1.0 Alpha</p>
+    <div class="container">
+        <main>
+            <div class="decor"></div>
+            <div class="info">
+                <img src="img/logo.svg">
+                <p>Ver 1.2 Alpha</p>
             </div>
-        <div class = "overlay">
-        <div class="modal">
-            <span id="cls" onclick="popm('sto')">X</span>
-           <p id="inf">  Email: minhkies@gmail.com<br></p> 
-          </div>
-        </div>
-        <div class="controls">
-        <button class="inp1" type="button" onclick= "window.location.href='mailto:minhkies@gmail.com'">Contact Us</button><br>
-        <button class="inp2" type="button"> Back </button>
-        </div>
-        <div id="da"></div>
-        </div>
-    </main> 
-    <script>
-//        var mod = document.querySelector(".overlay"),
-//            bt = document.querySelector(".inp1");
-//     function popm(inf){
-//         if (inf=="go"){
-//         mod.style.visibility = "visible"
-//         }
-//         else {
-//             mod.style.visibility = "hidden"
-//         }
-//     }
-    </script>
-    </body></html>
+            <div class="buttons">
+                <a href="mailto:thoang37@my.bcit.ca">Contact Us</a>
+                <a href="index.html">Home</a>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

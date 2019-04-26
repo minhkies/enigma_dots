@@ -148,6 +148,8 @@ main {
     margin-bottom: 5px;
     position: relative;
     display: inline-block;
+    max-width: 100px;
+    width: 100%;
 }
 
 .btns>p {
@@ -188,6 +190,7 @@ main {
     position: relative;
 }
 
+
 .mode_option p {
     padding-left: 5px;
     margin: 0;
@@ -203,6 +206,43 @@ main {
 }
 
 .hard_mode {
+    border-radius: 0px 0px 5px 5px;
+}
+
+
+.setting_option {
+    background-color: white;
+    width: 100px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0px 0px 51px 0px rgba(0, 0, 0, 0.08), 0px 6px 18px 0px rgba(0, 0, 0, 0.05);
+    visibility: hidden;
+    opacity: 0;
+    transition-duration: 0.5s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+
+.setting_option a {
+    padding-left: 5px;
+    margin: 0;
+    line-height: 50px;
+    text-decoration: none;
+    color: black;
+}
+
+.setting_option a:hover {
+    background-color: #e6e6e6;
+}
+
+.theme {
+    border-radius: 5px 5px 0 0;
+}
+
+.about {
     border-radius: 0px 0px 5px 5px;
 }
 

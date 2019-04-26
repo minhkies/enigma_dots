@@ -5,11 +5,56 @@ var username = document.querySelector(".username"),
     txtGreeting = document.querySelector(".txt_greeting"),
     txtWhatsup = document.querySelector(".whatsup"),
     modeOption = document.querySelector(".mode_option"),
+    settingOption = document.querySelector(".setting_option"),
     normal = document.querySelector(".normal_mode"),
     hard = document.querySelector(".hard_mode");
 
+var pkg = {
+    name: "",
+    mode: "normal",
+    theme: "normal",
+    winCount: 0
+}
+
+var spkg = localStorage.pkg;
+
+if (spkg) {
+    pkg = JSON.parse(spkg);
+}
+
+var handler = {
+    set: function(obj, props, value) {
+        //what to handle to change the UI
+        saveSetting()
+    }
+}
+
+
+var prox = new Proxy(pkg, handler);
+
+function changeState(type, val) {
+    if (type == 'mode') {
+        pkg.mode = val;
+        prox.mode = pkg.mode;
+    }
+    if (type == 'name') {
+        pkg.name = inpName.value;
+        prox.name = pkg.name;
+    }
+    if (type == 'changeName') {
+        pkg.name = "";
+        prox.name = pkg.name;
+    }
+    console.log(pkg);
+}
+
+function saveSetting() {
+    localStorage.setItem("pkg", JSON.stringify(pkg));
+    userCheck();
+}
+
 function userCheck() {
-    if (localStorage.name == null) {
+    if (pkg.name == "") {
         dimmer.style.visibility = "visible";
         dimmer.style.opacity = "1";
         username.style.visibility = "visible";
@@ -19,45 +64,55 @@ function userCheck() {
         dimmer.style.opacity = "0";
         username.style.visibility = "hidden";
         username.style.opacity = "0";
-        txtName.innerHTML = localStorage.name;
+        txtName.innerHTML = pkg.name;
         txtGreeting.style.opacity = "1";
         txtWhatsup.style.opacity = "1";
     }
 }
 
-function saveUsername() {
-    if (inpName.value != "") {
-        localStorage.name = inpName.value;
-        userCheck();
-    }
-}
 
 function popUpOps(event) {
-    if (localStorage.mode != "hard") {
+    pkg = JSON.parse(localStorage.pkg);
+    if (pkg.mode != "hard") {
         normal.style.fontWeight = "bold";
         hard.style.fontWeight = "normal";
     } else {
         normal.style.fontWeight = "normal";
         hard.style.fontWeight = "bold";
-    }
-
-    if (localStorage.winCount != 1) {
+    };
+    pkg = JSON.parse(localStorage.pkg);
+    if (pkg.winCount == 0) {
         hard.style.color = "gray";
         hard.style.pointerEvents = "none";
         hard.style.cursor = "normal";
     }
-    modeOption.style.visibility = "visible";
-    modeOption.style.opacity = "1";
-    event.stopPropagation();
+    if (modeOption.style.visibility == "visible") {
+        modeOption.style.visibility = "hidden";
+        modeOption.style.opacity = "0";
+    } else {
+        modeOption.style.visibility = "visible";
+        modeOption.style.opacity = "1";
+        event.stopPropagation();
+    }
 }
 
+function popUpSettings(event) {
+    if (settingOption.style.visibility == "visible") {
+        settingOption.style.visibility = "hidden";
+        settingOption.style.opacity = "0";
+    } else {
+        settingOption.style.visibility = "visible";
+        settingOption.style.opacity = "1";
+        event.stopPropagation();
+    }
+}
 window.addEventListener("click", function() {
     if (modeOption.style.visibility == "visible") {
         modeOption.style.visibility = "hidden";
         modeOption.style.opacity = "0";
     }
+    if (settingOption.style.visibility == "visible") {
+        settingOption.style.visibility = "hidden";
+        settingOption.style.opacity = "0";
+    }
 })
-
-function mode(value) {
-    localStorage.mode = value;
-}
