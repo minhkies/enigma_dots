@@ -3,13 +3,12 @@
 
 <head>
     <title>Enigma Dots</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
 </head>
 
-<body onload="userCheck()">
+<body onload="userCheck(); themeCheck()">
     <div class="container">
         <main>
             <section class="username">
@@ -39,12 +38,9 @@
                                 }
                             </style>
                     </defs>
-                    <title>Asset 2</title>
-                    <g id="Layer_2" data-name="Layer 2">
-                        <g id="Layer_1-2" data-name="Layer 1">
-                            <circle class="pcls-1" cx="145.27" cy="145.27" r="145.27" />
-                            <path class="pcls-2" d="M169.44,136.61,131.1,114.47a10,10,0,0,0-15,8.66V167.4a10,10,0,0,0,15,8.66l38.34-22.13A10,10,0,0,0,169.44,136.61Z" />
-                        </g>
+                    <g>
+                        <circle class="pcls-1" cx="145.27" cy="145.27" r="145.27" />
+                        <path class="pcls-2" d="M169.44,136.61,131.1,114.47a10,10,0,0,0-15,8.66V167.4a10,10,0,0,0,15,8.66l38.34-22.13A10,10,0,0,0,169.44,136.61Z" />
                     </g>
                 </svg>
                 <p>Play</p>
@@ -52,7 +48,7 @@
             <div class="button_row">
                 <div class="button_container">
                     <div class="setting_option">
-                        <a class="theme" href=#>Theme</a>
+                        <a class="theme" href="theme.html">Theme</a>
                         <a class="about" href="about.html">About</a>
                     </div>
                     <div class="btns">

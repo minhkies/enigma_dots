@@ -1,10 +1,41 @@
+var pkg = {
+    name: "",
+    mode: "normal",
+    theme: "light",
+    winCount: 0,
+}
+
+var spkg = localStorage.pkg;
+
+if (spkg) {
+    pkg = JSON.parse(spkg);
+}
+
+function themeCheck() {
+    var css = document.createElement("link");
+    css.type = "text/css";
+    css.rel = "stylesheet";
+    css.href = "css/app" + pkg.theme + ".css";
+
+    document.head.appendChild(css);
+}
+
+function loadJSON() {
+    var jsonfile = document.createElement("script");
+    jsonfile.type = "text/javascript";
+    jsonfile.src = "JSON/" + pkg.theme + ".json";
+
+    document.body.appendChild(jsonfile);
+}
+
+var color, emptyColorChoice, keyColor;
+
 var id = "",
     guessCount = 0,
     correctColor = 0,
     correctPosition = 0,
     answer = [],
     emptyColor = "rgb(230, 230, 230)",
-    emptyColorChoice = "rgb(190, 190, 190)",
     colorLineClass = ["color_0", "color_1", "color_2", "color_3", "color_4", "color_5", "color_6"],
     colorArray = [];
 
@@ -108,7 +139,7 @@ function setHeight() {
 function allowDrop(ev) {
     ev.preventDefault();
     if (ev.target.classList.contains("color_" + guessCount)) {
-        ev.target.style.border = "solid 1px rgb(40, 173, 126)";
+        ev.target.style.border = "solid 1px " + keyColor;
         ev.target.addEventListener("dragleave", function() {
             ev.target.style.border = "solid 1px " + window.getComputedStyle(ev.target).backgroundColor;
         });
@@ -118,7 +149,7 @@ function allowDrop(ev) {
 function allowDropColorChoice(ev) {
     ev.preventDefault();
     for (i = 0; i <= 5; i++) {
-        colorChoicesTarget[i].style.border = "solid 1px rgb(40, 173, 126)";
+        colorChoicesTarget[i].style.border = "solid 1px " + keyColor;
     }
     colorChoiceArea.addEventListener("dragleave", function() {
         for (i = 0; i <= 5; i++) {
@@ -265,7 +296,7 @@ function quantityCheck() {
     }
     if (count == 0) {
         hintBox[guessCount].style.display = "flex";
-        hintBox[guessCount].style.backgroundColor = "rgb(40, 173, 126)";
+        hintBox[guessCount].style.backgroundColor = keyColor;
         txtHint[guessCount].innerHTML = "NEXT";
     } else {
         if (hintBox[guessCount].style.display == "flex") {
@@ -275,7 +306,7 @@ function quantityCheck() {
 }
 
 function qualityCheck(ev) {
-    if (hintBox[guessCount].style.backgroundColor == "rgb(40, 173, 126)") {
+    if (hintBox[guessCount].style.backgroundColor == keyColor) {
         correctColor = 0;
         correctPosition = 0;
         for (i = 0; i <= 3; i++) {
@@ -289,8 +320,8 @@ function qualityCheck(ev) {
                 }
             }
         }
-        hintBox[guessCount].style.backgroundColor = "rgb(255, 255, 255)";
-        txtHint[guessCount].style.color = "black";
+        hintBox[guessCount].style.backgroundColor = window.getComputedStyle(guessLine[0]).backgroundColor;
+        txtHint[guessCount].style.color = window.getComputedStyle(txtMessage).color;
         txtHint[guessCount].style.fontSize = "20pt";
         txtHint[guessCount].innerHTML = "<b>" + correctPosition + " </b> - " + correctColor;
         txtMessage.innerHTML = message[guessCount][correctPosition][correctColor];

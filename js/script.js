@@ -12,8 +12,8 @@ var username = document.querySelector(".username"),
 var pkg = {
     name: "",
     mode: "normal",
-    theme: "normal",
-    winCount: 0
+    theme: "light",
+    winCount: 0,
 }
 
 var spkg = localStorage.pkg;
@@ -116,3 +116,12 @@ window.addEventListener("click", function() {
         settingOption.style.opacity = "0";
     }
 })
+
+function themeCheck() {
+    var css = document.createElement("link");
+    css.type = "text/css";
+    css.rel = "stylesheet";
+    css.href = "css/style" + JSON.parse(localStorage.pkg).theme + ".css";
+
+    document.head.appendChild(css);
+}
