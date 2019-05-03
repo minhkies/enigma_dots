@@ -46,6 +46,7 @@ main {
     display: flex;
     flex-direction: column;
 
+
 }
 
 .current_theme {
@@ -58,12 +59,14 @@ main {
 .current_theme>p {
     text-align: center;
     font-size: 18pt;
+    color: black;
 }
 
 .current {
     font-size: 22pt;
     font-weight: bold;
     text-transform: uppercase;
+    color: black;
 }
 
 .themes {
